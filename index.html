@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>计时器</title>
+    <link rel="stylesheet" href="fonts.css" type="text/css" charset="utf-8" />
+    <style>
+        body,
+        html,
+        div,
+        ul,
+        li,
+        table,
+        td,
+        input {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            /* background: #c13341; */
+            padding-top: 150px;
+            background: #c13341 url('./images/bg.png') no-repeat top center;
+        }
+
+        @-webkit-keyframes neon1 {
+            from {
+                text-shadow: 0 0 0px #f4dd97,
+                0 0 20px #f4dd97,
+                0 0 30px #f4dd97,
+                0 0 40px #fff,
+                0 0 70px #fff,
+                0 0 80px #fff,
+                0 0 100px #fff,
+                0 0 150px #fff;
+            }
+            to {
+                text-shadow: 0 0 5px #f4dd97,
+                0 0 10px #f4dd97,
+                0 0 15px #f4dd97,
+                0 0 20px #fff,
+                0 0 35px #fff,
+                0 0 40px #fff,
+                0 0 50px #fff,
+                0 0 75px #fff;
+            }
+        }
+
+        @-webkit-keyframes neon2 {
+            from {
+                text-shadow: 0 0 0px #fff,
+                0 0 20px #fff,
+                0 0 30px #fff,
+                0 0 40px #d3b867,
+                0 0 70px #d3b867,
+                0 0 80px #d3b867,
+                0 0 100px #d3b867,
+                0 0 150px #d3b867;
+            }
+            to {
+                text-shadow: 0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 15px #fff,
+                0 0 20px #d3b867,
+                0 0 35px #d3b867,
+                0 0 40px #d3b867,
+                0 0 50px #d3b867,
+                0 0 75px #d3b867;
+            }
+        }
+
+
+        .time_content {
+            color: #fff;
+            font-size: 0;
+            font-family: Conv_Exo-Regular, Verdana, Tahoma, Arial, Sans-Serif;
+            width: 50%;
+            float: left;
+        }
+
+        .time_content span {
+            display: inline-block;
+            width: 65px;
+            text-align: center;
+            font-size: 100px;
+
+        }
+
+        .content {
+            color: #fff;
+            font-family: Conv_Exo-Regular, Verdana, Tahoma, Arial, Sans-Serif;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .btn_list a {
+            position: relative;
+            /* display: flex; */
+            /* flex: 1 0 auto; */
+            display: block;
+            margin: 0 auto;
+            justify-content: center;
+            overflow: hidden;
+            width: 120px;
+            height: 120px;
+            line-height: 8em;
+            border: 2px solid #FFFFFF;
+            border-radius: 50%;
+            color: #FFFFFF;
+            font-size: 26px;
+            font-weight: 700;
+            font-style: normal;
+            line-height: 120px;
+            /* letter-spacing: 0.075em; */
+            /* text-transform: uppercase; */
+            transition: all 400ms cubic-bezier(0.16, 0.68, 0.43, 0.99);
+            text-align: center;
+            text-decoration: none;
+            background: #a92d38;
+        }
+
+        .start_btnw {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            margin-top: 30px;
+            text-align: center;
+            overflow: hidden;
+            display: flex;
+
+        }
+
+        .btn_list a.cur {
+            background-color: #D3B867;
+            border-color: #D3B867;
+        }
+
+        .btn_list a:hover {
+            background-color: #D3B867;
+            border-color: #D3B867;
+        }
+
+        #time1 {
+            color: #ffd965;
+            text-align: left;
+        }
+
+        #time2 {
+            color: #e4e4e4;
+            text-align: right;
+
+        }
+
+        #time1.s {
+            -webkit-animation: neon2 1s ease-in-out infinite alternate;
+            -moz-animation: neon2 1s ease-in-out infinite alternate;
+            animation: neon2 1s ease-in-out infinite alternate;
+        }
+
+        #time2.s {
+            -webkit-animation: neon1 1s ease-in-out infinite alternate;
+            -moz-animation: neon1 1s ease-in-out infinite alternate;
+            animation: neon1 1s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div class="time_content" id="time1">
+            <span>0</span>
+            <span>0</span>
+            <span>:</span>
+            <span>0</span>
+            <span>0</span>
+            <span>.</span>
+            <span>0</span>
+            <span>0</span>
+        </div>
+        <div class="time_content" id="time2">
+            <span>0</span>
+            <span>0</span>
+            <span>:</span>
+            <span>0</span>
+            <span>0</span>
+            <span>.</span>
+            <span>0</span>
+            <span>0</span>
+        </div>
+
+    </div>
+    <div class="btn_list">
+        <div class="start_btnw">
+            <a href="javascript:void(0)" class="start_btn" id="start_btn">
+                开始
+            </a>
+        </div>
+        <div class="start_btnw">
+            <a href="javascript:void(0)" style="display:none" class="puse_btn" id="puse_btn1">
+                暂停
+            </a>
+            <a href="javascript:void(0)" style="display:none" class="puse_btn" id="puse_btn2">
+                暂停
+            </a>
+        </div>
+        <div class="start_btnw">
+            <a href="javascript:void(0)" style="display:none" class="start_btn" id="reset_btn">
+                重置
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    var obj = [{
+
+            interval: false,
+            startTime: 0,
+            nowTime: 0,
+            records: []
+        },
+        {
+            interval: false,
+            startTime: 0,
+            nowTime: 0,
+            records: []
+        }
+    ]
+
+    function addEvent(target, type, handler) {
+        if (target.addEventListener) {
+            target.addEventListener(type, handler, false);
+        } else if (target.attachEvent) {
+            btn.attachEvent("on" + type, function (event) {
+                return hanlder.call(target, event);
+            });
+        }
+    }
+
+    function hasClass(target, className) {
+        var reg = new RegExp('\\s' + className + '\\s', 'g');
+        return reg.test(' ' + target.className + ' ');
+    }
+
+    function addClass(target, className) {
+        var oldClasses = target.className;
+        if (!hasClass(target, className)) {
+            oldClasses += ' ' + className;
+        } else if (!oldClasses) {
+            oldClasses = className;
+        }
+        target.className = oldClasses
+    }
+
+    function removeClass(target, className) {
+        var reg = new RegExp('\\s' + className + '\\s', 'g');
+        if (hasClass(target, className)) {
+            target.className = (' ' + target.className + ' ').replace(reg, '').replace(/^\s+|\s+$/g, '').replace(/\s+/g,
+                ' ');
+        }
+    }
+
+    function actionStatus(status) {
+        var startBtn = document.getElementById('start_btn')
+        var resetBtn = document.getElementById('reset_btn')
+        var puseBtn1 = document.getElementById('puse_btn1')
+        var puseBtn2 = document.getElementById('puse_btn2')
+        switch (status) {
+            case 0: //开始
+                startBtn.style.display = 'none'
+                resetBtn.style.display = 'flex'
+                puseBtn1.style.display = 'flex'
+                puseBtn2.style.display = 'flex'
+                break;
+            case 1: //暂停
+                startBtn.style.display = 'none'
+                resetBtn.style.display = 'flex'
+                puseBtn1.style.display = 'flex'
+                puseBtn2.style.display = 'flex'
+                break;
+            case 2: //重置之后
+                startBtn.style.display = 'flex'
+                resetBtn.style.display = 'none'
+                puseBtn1.style.display = 'none'
+                puseBtn2.style.display = 'none'
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    function addEleEvent() {
+        var startBtn = document.getElementById('start_btn')
+        var resetBtn = document.getElementById('reset_btn')
+        var puseBtn1 = document.getElementById('puse_btn1')
+        var puseBtn2 = document.getElementById('puse_btn2')
+        addEvent(startBtn, 'click', function (event) {
+            !obj[0].interval && startTimer(0, 'time1');
+            !obj[1].interval && startTimer(1, 'time2');
+        })
+        addEvent(resetBtn, 'click', function (event) {
+            resetTimer(0, 'time1')
+            resetTimer(1, 'time2')
+        })
+        addEvent(puseBtn1, 'click', function (event) {
+            if (event.target.innerHTML == "继续") {
+                !obj[0].interval && startTimer(0, 'time1');
+            } else {
+                obj[0].interval && countTimer(0, 'time1');
+            }
+        })
+        addEvent(puseBtn2, 'click', function (event) {
+            if (event.target.innerHTML == "继续") {
+                !obj[1].interval && startTimer(1, 'time2');
+            } else {
+                obj[1].interval && countTimer(1, 'time2');
+            }
+        })
+    }
+    window.onload = function () {
+
+        addEvent(document, 'keyup', function (event) {
+            var keycode = event.keyCode;
+            switch (keycode) {
+                case 13:
+                    !obj[0].interval && startTimer(0, 'time1');
+                    !obj[1].interval && startTimer(1, 'time2');
+                    break;
+                case 90:
+                    obj[0].interval && countTimer(0, 'time1');
+                    break;
+                case 88:
+                    obj[1].interval && countTimer(1, 'time2');
+                    break;
+                case 32:
+                    resetTimer(0, 'time1')
+                    resetTimer(1, 'time2')
+                    break;
+                default:
+                    break;
+            }
+
+        })
+        addEleEvent()
+    }
+
+    function startTimer(num, ele) {
+        var stimeO = obj[num].startTime
+        var puseBtn1 = document.getElementById('puse_btn1')
+        var puseBtn2 = document.getElementById('puse_btn2')
+        var timeContent = document.getElementById(ele);
+        obj[num].startTime = (new Date().getTime() / 10) - (obj[num].nowTime);
+        obj[num].interval = setInterval(getTimes(num, ele), 10)
+        removeClass(timeContent, 's')
+        actionStatus(0)
+        if (num == 0) {
+            puseBtn1.innerHTML = "暂停"
+            removeClass(puseBtn1, 'cur')
+        } else {
+            puseBtn2.innerHTML = "暂停"
+            removeClass(puseBtn2, 'cur')
+
+        }
+    }
+
+    function countTimer(num, ele) {
+        var puseBtn1 = document.getElementById('puse_btn1')
+        var puseBtn2 = document.getElementById('puse_btn2')
+        var timeContent = document.getElementById(ele);
+        obj[num].startTime = new Date().getTime() / 10 - obj[num].nowTime
+        clearInterval(obj[num].interval)
+        obj[num].interval = false;
+        addClass(timeContent, 's')
+        if (num == 0) {
+            puseBtn1.innerHTML = "继续"
+            addClass(puseBtn1, 'cur')
+
+        } else {
+            puseBtn2.innerHTML = "继续"
+            addClass(puseBtn2, 'cur')
+        }
+        actionStatus(1)
+
+    }
+
+    function resetTimer(num, ele) {
+        var timeContent = document.getElementById(ele);
+        obj[num].startTime = new Date().getTime() / 10
+        obj[num].nowTime = 0
+        clearInterval(obj[num].interval)
+        obj[num].interval = false;
+        getTimes(num, ele)()
+        actionStatus(2)
+        removeClass(timeContent, 's')
+    }
+
+    function getTimes(num, ele) {
+        return function () {
+            var timeContent = document.getElementById(ele);
+            var time = obj[num].nowTime = Math.floor(new Date().getTime() / 10 - obj[num].startTime);
+            if (time > 594000) {
+                clearInterval(obj[num].interval)
+                obj[num].startTime = 0;
+
+                obj[num].interval = false;
+                timeContent.innerHTML = "99:00.00"
+                return
+            }
+            timeContent.innerHTML = timeFormat(time + '');
+        }
+    }
+
+    function timeFormat(time) {
+
+        var m = '',
+            s = '',
+            ms = '',
+            u = '';
+        ms = Math.floor(time % 100);
+        s = Math.floor(time % 6000 / 100);
+        m = Math.floor(time % 600000 / 6000);
+        var html = (addZero(m) + ':' + addZero(s) + '.' + addZero(ms)).split(''),
+            arr = []
+        for (let i = 0; i < html.length; i++) {
+            const element = html[i];
+            arr.push('<span>' + element + '</span>')
+        }
+        return arr.join('')
+    };
+
+    function addZero(num) {
+        if (num < 10) num = '0' + num;
+        return num;
+    }
+</script>
